@@ -1,0 +1,40 @@
+﻿@model IEnumerable<WaveaccessTask.Models.Actor>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Actors</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Sort" asp-route-sorting="@WaveaccessTask.Controllers.ActorsController.SortBy.Name">Name</a>
+            </th>
+            <th>
+                <a asp-action="Sort" asp-route-sorting="@WaveaccessTask.Controllers.ActorsController.SortBy.Rating">Rating</a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">@item.Name</a>
+            </td>
+            <td>
+                    @item.Rating
+
+                    @{
+                        @using (Html.BeginForm("Like", "Actors"))
+                        {
+                            <input type="hidden" value="@item.Id" name="id" />
+                            <input type="submit" value="Like" />   
+                        }
+                    }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
